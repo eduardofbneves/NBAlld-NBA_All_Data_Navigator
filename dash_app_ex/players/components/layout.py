@@ -1,8 +1,9 @@
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, register_page
 import pandas as pd
 import plotly.express as px
 from . import dropdown_example, dropdown_stats, line_graph
 
+register_page(__name__, path/players)
 
 def create_layout(app: Dash, data: list[pd.DataFrame]) -> html.Div:
     return html.Div(
