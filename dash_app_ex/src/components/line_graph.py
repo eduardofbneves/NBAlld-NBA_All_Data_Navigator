@@ -6,8 +6,8 @@ import pandas as pd
 
 from . import ids
 
-def render(app: Dash, data: list[pd.DataFrame]) -> html.Div:
-    
+def render(app: Dash, data: list[pd.DataFrame]) -> px.line():
+    fig = None
     @app.callback(
         Output("line_graph", "figure"),
         [Input("dropdown", "value"),
@@ -16,7 +16,6 @@ def render(app: Dash, data: list[pd.DataFrame]) -> html.Div:
     def update_bar_chart(full_name: [str], stats: list[str]) -> html.Div:
         if len(data) == 0:
             return html.Div("No data selected.", id="line_chart")
-
         table = data[1]
         team_id = data[0].loc[data[0]['full_name'].isin(full_name)]
         filtered_data = table.loc[table['team_id'].isin(team_id['id'].tolist())]
@@ -24,7 +23,8 @@ def render(app: Dash, data: list[pd.DataFrame]) -> html.Div:
                       x="season_id", 
                       y=stats)
 
-        return html.Div(dcc.Graph(figure=fig), id="line_graph")
-        #return fig
+        #return html.Div(dcc.Graph(figure=fig), id="line_graph")
+        return fig
 
-    return html.Div(id="line_graph")
+    #return html.Div(id="line_graph")
+    return fig
