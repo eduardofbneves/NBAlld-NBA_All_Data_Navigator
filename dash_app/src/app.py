@@ -1,9 +1,11 @@
 from dash import Dash, html, dcc, page_registry, page_container
 
+from components.navbar import navbar
 
 def main() -> None:
     app = Dash(__name__, use_pages=True)
     app.title = "Test"
+    '''
     app.layout = html.Div([
         html.H1('Multi-page app with Dash Pages'),
 
@@ -19,6 +21,10 @@ def main() -> None:
         ),
         page_container
     ])
+    '''
+    app.layout(
+        navbar
+    )
     app.run()
 
 
