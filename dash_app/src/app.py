@@ -1,9 +1,9 @@
 from dash import Dash, html, dcc, page_registry, page_container
-
+import dash_bootstrap_components as dbc
 from components.navbar import navbar
 
 def main() -> None:
-    app = Dash(__name__, use_pages=True)
+    app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.SLATE])
     app.title = "Test"
     '''
     app.layout = html.Div([
@@ -22,9 +22,17 @@ def main() -> None:
         page_container
     ])
     '''
-    app.layout(
-        navbar
-    )
+
+    app.layout = html.Div([
+	html.H1('NBA Stats Visualization'),
+
+    html.Div(
+        [
+        navbar,
+        page_container,
+        ]
+    ),
+    ])
     app.run()
 
 

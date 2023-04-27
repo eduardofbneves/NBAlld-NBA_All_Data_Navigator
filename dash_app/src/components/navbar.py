@@ -3,9 +3,11 @@
 
 # package imports
 import dash_bootstrap_components as dbc
-from dash import Input, Output, State, html
+import dash
+from dash import Input, Output, State, html, dcc, page_registry, page_container
 from dash_bootstrap_components._components.Container import Container
 
+'''
 search_bar = dbc.Row(
     [
         dbc.Col(dbc.Input(type="search", placeholder="Search")),
@@ -19,38 +21,37 @@ search_bar = dbc.Row(
     className="g-0 ms-auto flex-nowrap mt-3 mt-md-0",
     align="center",
 )
+'''
+
 
 navbar = dbc.Navbar(
-    dbc.Container(
-        [
-            html.A(
-                # Use row and col to control vertical alignment of logo / brand
-                dbc.Row(
-                    [
-                        dbc.Col(dbc.NavbarBrand("Navbar", className="ms-2")),
+            dbc.Container(
+                [
+
+                    dbc.Row([
+                        dbc.Col([
+                            dbc.Nav([
+                                dbc.NavItem(dbc.NavLink("Home", href="/")),
+                                #dbc.NavItem(dbc.NavLink("Fundamentals", href="/fundamentals")),
+                                dbc.NavItem(dbc.NavLink("Players", href='/players')),
+                                dbc.NavItem(dbc.NavLink("Teams", href='/teams')),
+                            ],
+                            navbar=True
+                            )
+                        ],
+                        width={"size":"auto"})
                     ],
-                    align="center",
-                    className="g-0",
-                ),
-                href="https://plotly.com",
-                style={"textDecoration": "none"},
+                    align="center"),
+                    dbc.Col(dbc.NavbarToggler(id="navbar-toggler", n_clicks=0)),
+                ],
+            fluid=True
             ),
-            dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
-            dbc.Collapse(
-                search_bar,
-                id="navbar-collapse",
-                is_open=False,
-                navbar=True,
-            ),
-        ]
-    ),
-    color="dark",
-    dark=True,
+    color="primary",
+    dark=True
 )
 
-'''
-# add callback for toggling the collapse on small screens
-@app.callback(
+
+@dash.callback(
     Output("navbar-collapse", "is_open"),
     [Input("navbar-toggler", "n_clicks")],
     [State("navbar-collapse", "is_open")],
@@ -59,4 +60,3 @@ def toggle_navbar_collapse(n, is_open):
     if n:
         return not is_open
     return is_open
-'''

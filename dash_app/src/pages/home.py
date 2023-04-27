@@ -1,13 +1,18 @@
 # package imports
-import dash
-from dash import html, dcc, callback, Input, Output
+from dash import html, dcc, callback, Input, Output, register_page
+
+from utils.loader import load_dataframe
+
+register_page(__name__, path='/')
+
+
 
 layout = html.Div(
     [
         html.H1('Home page!'),
         html.Div(
-            html.A('Checkout the complex page here.', href='/complex')
-        ),
+            html.A('Go to Atalanta Hawks.', href='/teams/Atalanta')
+        ),  
         html.A('/page2', href='/page2'),
         dcc.RadioItems(
             id='radios',
