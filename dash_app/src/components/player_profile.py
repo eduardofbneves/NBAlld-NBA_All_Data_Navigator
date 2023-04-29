@@ -3,8 +3,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 
 def player_profile(player) -> html.Div:
-    return html.Div(
-        children=[
+    return dbc.Container([
             html.Div(
                 children=[
                     dbc.Row([
@@ -14,7 +13,8 @@ def player_profile(player) -> html.Div:
                         dbc.Col([
                             html.H6(player['first_name'])
                         ])
-                    ])
+                    ],
+                    )
                 ],
                 style={'display': 'inline-block'}
             )
