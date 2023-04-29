@@ -10,5 +10,5 @@ def load_dataframe(file: str) -> pd.DataFrame:
 
 def path_to_data(file: str) -> str:
     print(os.getcwd())
-    return os.path.join(os.getcwd(), 'dash_app_ex', 'data', file + '.csv')
+    return os.path.join(os.getcwd(), 'dash_app', 'data', file + '.csv')
     #return "./data/" + file + ".csv"
