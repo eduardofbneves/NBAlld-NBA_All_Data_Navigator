@@ -6,12 +6,13 @@ import pandas as pd
 
 def dropdown_vals(data: pd.DataFrame, title: str,
                   drop_id: str, out_id: str) -> html.Div:
+    '''
     @callback(
         Output(out_id, "value"),
     )
     def select_team_id():
         return options
-    
+    '''
     return html.Div(
         children=[
             html.H6(title),

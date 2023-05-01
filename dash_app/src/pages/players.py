@@ -1,4 +1,5 @@
 from dash import Dash, register_page, html, dcc
+import dash_bootstrap_components as dbc
 import os
 
 from utils.loader import load_dataframe
@@ -10,7 +11,22 @@ player_info = load_dataframe('common_player_info')
 player = player_info.loc[player_info['person_id'] == 51]
 
 layout = html.Div(
-    children=[
-        player_profile(player)
+    [
+        dbc.Row(dbc.Col(html.H3('East Conference'))),
+        dbc.Row(
+            [
+                dbc.Col(),
+                dbc.Col(),
+                dbc.Col(),
+            ]
+        ),
+        dbc.Row(dbc.Col(html.H3('West Conference'))),
+        dbc.Row(
+            [
+                dbc.Col(),
+                dbc.Col(),
+                dbc.Col(),
+            ]
+        ),
     ]
 )

@@ -33,8 +33,10 @@ navbar = dbc.Navbar(
                             dbc.Nav([
                                 dbc.NavItem(dbc.NavLink("Home", href="/")),
                                 #dbc.NavItem(dbc.NavLink("Fundamentals", href="/fundamentals")),
+                                dbc.NavItem(dbc.NavLink("Seasons", href='/season')),
                                 dbc.NavItem(dbc.NavLink("Players", href='/players')),
                                 dbc.NavItem(dbc.NavLink("Teams", href='/teams')),
+                                
                             ],
                             navbar=True
                             )
