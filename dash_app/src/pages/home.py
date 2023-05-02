@@ -41,6 +41,13 @@ layout = html.Div(
         ),
         dbc.Row(
             [
+                dbc.Col('Points made'),
+                dbc.Col('Assists'),
+                dbc.Col('Rebounds'),
+            ]
+        ),
+        dbc.Row(
+            [
                 dbc.Col(id='pts-list'),
                 dbc.Col(id='ast-list'),
                 dbc.Col(id='rebs-list'),
@@ -50,14 +57,18 @@ layout = html.Div(
     ]
 )
 
-@callback(Output('pts-list', 'array'), 
-          Output('ast-list', 'array'),
-          Output('rebs-list', 'array'),
+@callback(Output('pts-list', 'children'), 
+          Output('ast-list', 'children'),
+          Output('rebs-list', 'children'),
           Input('drop-season-home', 'value'),)
         
 def update_season(season):
     if season == None:
         season = season_ind['season_id'].unique()
+    elif season == []:
+        season = season_ind['season_id'].unique()
+    else:
+        season = season_ind[season_ind['season_str'].isin(season)]['season_id'].to_list()
     div1 = list_top_players(player_season_stats, player, 'pts_home', season)
     div2 = list_top_players(player_season_stats, player,'ast_home', season)
     div3 = list_top_players(player_season_stats, player,'reb_home', season)

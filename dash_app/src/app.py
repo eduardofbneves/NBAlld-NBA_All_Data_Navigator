@@ -1,9 +1,10 @@
-from dash import Dash, html, dcc, page_registry, page_container
+from dash import Dash, html, page_container
 import dash_bootstrap_components as dbc
 from components.navbar import navbar
 
 def main() -> None:
-    app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.SLATE])
+    app = Dash(__name__, use_pages=True, 
+               external_stylesheets=[dbc.themes.UNITED])
     app.title = "Test"
     '''
     app.layout = html.Div([
