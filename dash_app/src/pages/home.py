@@ -1,13 +1,18 @@
 # package imports
-from dash import html, dcc, callback, Input, Output, register_page
+from dash import html, dcc, callback, Input, Output, State, register_page
 import dash_bootstrap_components as dbc
 
 from utils.loader import load_dataframe
 from components.list_teams_home import list_teams_home
+from components.dropdown_vals import dropdown_vals
+from components.list_top_players import list_top_players
 
 register_page(__name__, path='/')
 
 team = load_dataframe('team')
+season_ind = load_dataframe('season_ind')
+player_season_stats = load_dataframe('player_season_stats')
+player = load_dataframe('player')
 
 layout = html.Div(
     [
@@ -27,9 +32,33 @@ layout = html.Div(
                 dbc.Col(list_teams_home(team, 'Southwest')),
             ]
         ),
+        dbc.Row(
+            [
+                dbc.Col(html.H3('Top players')),
+                dbc.Col(dropdown_vals(season_ind['season_str'], 'Pick season:',
+                                      'drop-season-home', '')),
+            ]
+        ),
+        dbc.Row(
+            [
+                dbc.Col(id='pts-list'),
+                dbc.Col(id='ast-list'),
+                dbc.Col(id='rebs-list'),
+            ]
+            
+        )
     ]
 )
 
-@callback(Output('content', 'children'), Input('radios', 'value'))
-def home_radios(value):
-    return f'You have selected {value}'
+@callback(Output('pts-list', 'array'), 
+          Output('ast-list', 'array'),
+          Output('rebs-list', 'array'),
+          Input('drop-season-home', 'value'),)
+        
+def update_season(season):
+    if season == None:
+        season = season_ind['season_id'].unique()
+    div1 = list_top_players(player_season_stats, player, 'pts_home', season)
+    div2 = list_top_players(player_season_stats, player,'ast_home', season)
+    div3 = list_top_players(player_season_stats, player,'reb_home', season)
+    return div1, div2, div3
