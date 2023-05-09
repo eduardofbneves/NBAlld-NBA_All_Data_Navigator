@@ -6,6 +6,7 @@ from utils.loader import load_dataframe
 from components.dropdown_stats import dropdown_stats
 #from components.line_graph import line_graph
 from components.line_graph_copy import line_graph
+from components.list_teams_home import list_teams_home
 
 register_page(__name__, path_template='/teams/<team_id>')
 
@@ -14,12 +15,15 @@ team = load_dataframe('team')
 team_season_stats = load_dataframe('team_season_stats')
 ids = team['id'].to_list()
 
-def layout(team_id = None):
-    #team = load_dataframe('team')
-    #team_season_stats = load_dataframe('team_season_stats')
-    #ids = team['id'].to_list()
+def layout(team_id):
+    print(team_id)
+    team = load_dataframe('team')
+    team_season_stats = load_dataframe('team_season_stats')
+    ids = team['id'].to_list()
     team_id = int(team_id)
-    if team_id not in ids:
+    if team_id==None:
+        return list_teams_home(team)
+    elif team_id not in ids:
         return dcc.Location(pathname="/not_found_404")
         # TODO ver se os ids na team devem estar em str para nao dar erro
     team = team[team['id'] == team_id]
@@ -39,8 +43,9 @@ def layout(team_id = None):
         Output("line_graph", "figure"),
         [Input('drop_test', "value")],
     )
-def update_bar_chart(stats: list[str], team_id):
-    filt = team_season_stats = team_season_stats[team_season_stats['team_id'] == team_id]
+def update_bar_chart(stats: list[str]):
+    print(stats)
+    filt = team_season_stats[team_season_stats['team_id'] == team_id]
     return line_graph(filt, stats,
                        'drop_test', 'line')
 
