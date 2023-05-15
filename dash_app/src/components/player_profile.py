@@ -13,7 +13,7 @@ def player_profile(player) -> html.Div:
             children=[
                 
                 dbc.Row([
-                html.H1('Player profile')
+                    html.H1('Player profile')
                 ], class_name='header-description'),
             dbc.Row([
                 dbc.Col([
@@ -45,8 +45,8 @@ def player_profile(player) -> html.Div:
                             html.P(['Year started', html.H4(check_nan_players(player.iloc[0]['from_year']))]),
                         ]),
                         dbc.Col([
-                            html.P(['Drafted', html.H4(check_nan_players(player.iloc[0]['draft_round'])
-                                                        + check_nan_players(player.iloc[0]['draft_number']))]),
+                            html.P(['Drafted', html.H4('R' + check_nan_players(player.iloc[0]['draft_round'])
+                                                        + ' ' + check_nan_players(player.iloc[0]['draft_number']))]),
                         ]),
                     ], className='pt-1')
                     ]),
