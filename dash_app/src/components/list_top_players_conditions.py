@@ -11,13 +11,10 @@ def list_top_players_conditions(stats: pd.DataFrame, player: pd.DataFrame,
     filtered_df.insert(2, 'col', summed)
     filtered_df = filtered_df.sort_values(by=['col'], ascending=False)
     filtered_df = filtered_df[filtered_df['season_id'].isin(season)].reset_index()
-    player_list = player[player['id'].isin(filtered_df['player_id'].to_list()[:6])]
+    player_list = player[player['id'].isin(filtered_df['player_id'].to_list()[:5])]
     array.append(html.H4(title))
     for ind in range(player_list.shape[0]):
         array.append(html.P(player_list.iloc[ind]['full_name']+ 
                             ' - ' + str(filtered_df.iloc[ind]['col'])))
-    return dbc.Card([
-                dbc.CardBody([
-                    array
-                ], className='text-center')
-            ])
+    return array
+

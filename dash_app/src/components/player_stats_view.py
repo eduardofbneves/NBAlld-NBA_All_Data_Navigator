@@ -3,6 +3,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import numpy as np
 
 from utils.check_nan_players import check_nan_players
 from utils.global_vars import PLAYER_STATS_INDEXES
@@ -14,6 +15,12 @@ def player_stats_view(player, player_stats) -> html.Div:
         y=['fg2', 'fg3', 'ft']
     ))
     '''
+    years = np.subtract(player_stats['season_id'].tolist(),20000)
+    line_fig = go.Figure()
+    line_fig.add_trace(go.Scatter(x=years,
+                                  y=player_stats['nmr_games'].tolist(),
+                                  mode='lines+markers'))
+    
     stats = player_stats[['pts_home','ast_home', 'miss', 'blk_home', 'reb_home']].mean(axis=0).tolist()
     stats_index = []
     for i in range(len(stats)):
@@ -36,8 +43,8 @@ def player_stats_view(player, player_stats) -> html.Div:
     '''
     
     sun_data = dict(
-        character=["pts", "fg2", "fg3", "ft", "fg2_home", "fg2_away", "fg3_home", "fg3_away", "ft_home", "ft_away"],
-        parent=["", "pts", "pts", "pts", "fg2", "fg2", "fg3", "fg3", "ft", "ft" ],
+        character=["buckets", "fg2", "fg3", "ft", "fg2_home", "fg2_away", "fg3_home", "fg3_away", "ft_home", "ft_away"],
+        parent=["", "buckets", "buckets", "buckets", "fg2", "fg2", "fg3", "fg3", "ft", "ft" ],
         value=[0,0,0,0] + player_stats[["fg2_pts_home", "fg2_pts_away", "fg3_pts_home", "fg3_pts_away", "ft_home", "ft_away"]].sum(axis=0).tolist()
         #value=[0, 0, 0, 0, 2, 6, 6, 4, 4,4])
     )
@@ -47,52 +54,51 @@ def player_stats_view(player, player_stats) -> html.Div:
         parents='parent',
         values='value',
     )
-    return html.Div(
-        [
+    return html.Div([
+        html.Div([
+            dcc.Link(html.Button("Compare"), 
+                href="/compare_players/"+str(player[0]), 
+                refresh=True)
+            ], className='align-center'),
+        
 
-    html.Div([
-    dbc.Row([
-        dbc.Col([
-            dbc.Card([
-                dbc.CardBody([
-                    dcc.Graph(
-                    figure = px.line(player_stats, 
-                                     x="season_id", y="nmr_games", 
-                                     labels={
-                                        "season_id": "Season",
-                                        "nmr_games": "Games",
-                                    },
-                                     title='Games per Season')
-                    )
+        html.Div([
+        dbc.Row([
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H3('Games per seasons'),
+                        dcc.Graph(figure = line_fig)
+                    ], className='text-center')
+                ]),
+            ], xs=4),
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H3('Player radial profile'),
+                        dcc.Graph(
+                            figure=go.Figure(data=go.Scatterpolar(
+                                r = stats_index,
+                                theta=['pts_home','ast_home', 'miss', 'blk_home', 'reb_home'],                   
+                                fill='toself'
+                            ))
+                        )
+                    ], className='text-center')
+                ])
+            ], xs=4),
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        html.H3('Buckets made home/away'),
+                        dcc.Graph(figure = sun_fig),
+                    ])
                 ], className='text-center')
-            ]),
-        ], xs=4),
-        dbc.Col([
-            dbc.Card([
-                dbc.CardBody([
-                    dcc.Graph(
-                                figure=go.Figure(data=go.Scatterpolar(
-                                    r = stats_index,
-                                    theta=['pts_home','ast_home', 'miss', 'blk_home', 'reb_home'],                   
-                                    fill='toself'
-                                ))
-                            )
-                ])
-            ], className='h-100 text-center')
-        ], xs=4),
-        dbc.Col([
-            dbc.Card([
-                dbc.CardBody([
-                    dcc.Graph(figure = sun_fig),
-                ])
-            ], className='h-100 text-center')
-        ], xs=4)
-    ], className='p-2 align-items-stretch'),
-    # content
-])
+            ], xs=4)
+        ]),
+    ])
 
-    ]
-)
+        ]
+    )
     
 '''
 dict(

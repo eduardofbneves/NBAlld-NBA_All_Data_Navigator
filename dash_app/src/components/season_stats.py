@@ -12,20 +12,67 @@ def season_stats(team, team_stats, player, player_stats) -> html.Div:
     team_list = team[team['id'].isin(
         team_stats.sort_values(by=['pts'], ascending=False)['team_id'].tolist()[:5])]
     sorted_teams = team_stats.sort_values(by=['pts'], ascending=False)
-    bar_fig = go.Figure()
-    bar_fig.add_trace(go.Bar(x=team_list['full_name'], 
-                           y=sorted_teams['fgm'].tolist()[:5], 
-                           name='field goals made'))
-    bar_fig.add_trace(go.Bar(x=team_list['full_name'], 
-                           y=sorted_teams['fg3m'].tolist()[:5], 
-                           name='three pointers made'))
-    bar_fig.add_trace(go.Bar(x=team_list['full_name'], 
-                           y=sorted_teams['ftm'].tolist()[:5], 
-                           name='free thorws made'))
+    bar_fig = make_subplots(rows=1, cols=2, specs=[[{}, {}]], shared_xaxes=True,
+                    shared_yaxes=False, vertical_spacing=0.001)
+    bar_fig.append_trace(go.Bar(y=team_list['full_name'], 
+                           x=sorted_teams['fgm'].tolist()[:5], 
+                           name='field goals made',
+                           orientation='h'), 1, 1)
+    bar_fig.append_trace(go.Bar(y=team_list['full_name'], 
+                           x=sorted_teams['fg3m'].tolist()[:5], 
+                           name='three pointers made',
+                           orientation='h'), 1, 1)
+    bar_fig.append_trace(go.Bar(y=team_list['full_name'], 
+                           x=sorted_teams['ftm'].tolist()[:5], 
+                           name='free thorws made',
+                           orientation='h'), 1, 1)
     
+    bar_fig.append_trace(go.Scatter(
+        y=team_list['full_name'], 
+        x=sorted_teams['fg_pct'].tolist()[:5],
+        mode='lines+markers',
+        line_color='rgb(128, 0, 128)',
+        name='Buckets made per season',
+    ), 1, 2)
+    
+    bar_fig.update_layout(
+    title='Buckets made per season and accuracy',
+    yaxis=dict(
+        showgrid=False,
+        showline=False,
+        showticklabels=True,
+    ),
+    yaxis2=dict(
+        showgrid=False,
+        showline=True,
+        showticklabels=False,
+        linecolor='rgba(102, 102, 102, 0.8)',
+        linewidth=2,
+    ),
+    xaxis=dict(
+        zeroline=False,
+        showline=False,
+        showticklabels=True,
+        showgrid=True,
+    ),
+    xaxis2=dict(
+        zeroline=False,
+        showline=False,
+        showticklabels=True,
+        showgrid=True,
+        side='top',
+    ),
+    legend=dict(
+    yanchor="middle",
+    xanchor="center",
+    ),
+    margin=dict(l=100, r=20, t=70, b=70),
+    paper_bgcolor='rgb(248, 248, 255)',
+    plot_bgcolor='rgb(248, 248, 255)',
+    )
     '''
-       line_fig = go.Scatter(
-        x=team_list['full_name'], y=sorted_teams['fg_pct'].tolist()[:5],
+    line_fig = go.Scatter(
+        
         mode='lines+markers',
         line_color='rgb(128, 0, 128)',
         name='Percentage of each bucker',
@@ -40,20 +87,20 @@ def season_stats(team, team_stats, player, player_stats) -> html.Div:
                             specs=[[{"type": "pie"}, {"type": "pie"},{"type": "pie"}]],
                             subplot_titles=("Blocks", "Steals", "Defensive Rebounds"))
     team_list = team[team['id'].isin(
-        team_stats.sort_values(by=['stl'], ascending=False)['team_id'].tolist()[:6])]['full_name'].tolist()
-    sub_fig.add_trace(go.Pie(values=team_stats.sort_values(by=['blk'], ascending=False)['dreb'].iloc[:6], 
+        team_stats.sort_values(by=['stl'], ascending=False)['team_id'].tolist()[:5])]['full_name'].tolist()
+    sub_fig.add_trace(go.Pie(values=team_stats.sort_values(by=['blk'], ascending=False)['dreb'].iloc[:5], 
                             labels=team_list, hole=.2),
                     row=1, col=1)
     team_list = team[team['id'].isin(
-        team_stats.sort_values(by=['blk'], ascending=False)['team_id'].tolist()[:6])]['full_name'].tolist()                 
+        team_stats.sort_values(by=['blk'], ascending=False)['team_id'].tolist()[:5])]['full_name'].tolist()                 
     sub_fig.add_trace(go.Pie(
-                            values=team_stats.sort_values(by=['stl'], ascending=False)['dreb'].iloc[:6], 
+                            values=team_stats.sort_values(by=['stl'], ascending=False)['dreb'].iloc[:5], 
                             labels=team_list, hole=.2),
                     row=1, col=2)
     team_list = team[team['id'].isin(
-        team_stats.sort_values(by=['dreb'], ascending=False)['team_id'].tolist()[:6])]['full_name'].tolist()
+        team_stats.sort_values(by=['dreb'], ascending=False)['team_id'].tolist()[:5])]['full_name'].tolist()
     sub_fig.add_trace(go.Pie(
-                            values=team_stats.sort_values(by=['dreb'], ascending=False)['dreb'].iloc[:6], 
+                            values=team_stats.sort_values(by=['dreb'], ascending=False)['dreb'].iloc[:5], 
                             labels=team_list, hole=.2),
                     row=1, col=3)
     
@@ -68,7 +115,6 @@ def season_stats(team, team_stats, player, player_stats) -> html.Div:
                 dbc.Card([
                     dbc.CardBody([
                         dbc.Col([
-                            html.P('Buckets made by top 5 pointers each window'),
                             dcc.Graph(figure=bar_fig)
                         ])
                         
@@ -80,7 +126,7 @@ def season_stats(team, team_stats, player, player_stats) -> html.Div:
                 dbc.Card([
                     dbc.CardBody([
                         html.P('Field goals per seasons selected'),
-                        dcc.Graph(figure=bar_fig)
+                        dcc.Graph()
                     ], className='text-center')
                 ]),
             ], xs=4),

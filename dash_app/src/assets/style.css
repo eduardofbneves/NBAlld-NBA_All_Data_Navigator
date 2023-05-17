@@ -23,6 +23,14 @@ body {
     justify-content: center;
 }
 
+.header-compare{
+    background-color: #222222;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .header-teams{
     background-color: #222222;
     height: 230px;
@@ -56,7 +64,6 @@ body {
     color: #CFCFCF;
     text-align: center;
     vertical-align: middle;
-    text-align: middle
 }
 
 .home-text {

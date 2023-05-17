@@ -1,6 +1,7 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -18,7 +19,24 @@ def team_stats_view(team, team_stats, player, player_season_stats) -> html.Div:
     '''
     players = player[player['team_id']==team.iloc[0,0]]
     player_stats = player_season_stats[player_season_stats['player_id'].isin(players['id'].tolist())]
-    print(players, player_stats)
+    bubble_fig = go.Figure(data=[go.Scatter(
+        x=team_stats['fg_pct'].tolist(),
+        y=team_stats['fg3_pct'].tolist(),
+        mode='markers',
+        marker=dict(
+            color=np.subtract(team_stats['season_id'].tolist(),20000),
+            size=np.divide(team_stats['pts'].tolist(),2.5),
+            showscale=True
+            )
+    )])
+    
+    bubble_fig.update_layout(
+        title="Field goal percentage distribution and points by year",
+        xaxis_title="2 pointers (fg)",
+        yaxis_title="3 pointers (fg)",
+        legend_title="season",
+    )
+    
     return html.Div(
         [
 
@@ -37,7 +55,7 @@ def team_stats_view(team, team_stats, player, player_season_stats) -> html.Div:
         dbc.Col([
             dbc.Card([
                 dbc.CardBody([
-                    
+                    dcc.Graph(figure=bubble_fig)
                 ])
             ], className='h-100 text-center')
         ], xs=4),
