@@ -10,13 +10,25 @@ The starting point was the [NBA Database](https://www.kaggle.com/datasets/wyatto
 
 :warning: **Disclaimer**: This dataset is updated daily but since the application would be static, the last season accounted was the previous one at the time of development (22/23 season).
 
+
 ## **Installation**
 
 To install the NBAll'd - NBA All Data Navigator, follow these steps:
 
-1. Clone the repository: **`git clone https://github.com/username/project-title.git`**
-2. Navigate to the project directory: **`cd project-title`**
-3. Install dependencies: **`npm install`**
-4. Build the project: **`npm run build`**
-5. Start the project: **`npm start`**
+1. Clone the repository: **`git clone https://github.com/eduardofbneves/NBAlld-NBA_All_Data_Navigator.git`**
+2. Navigate to the project directory: **`cd dash_app`**
+3. Install dependencies: **`pip install -r requirements.txt`**
+4. Source folder: **`cd src`**
+5. Start the project: **`python app.py`**
+6. Access app: **http://127.0.0.1:8050** (or link shown on terminal when initializing)
 
+
+## **Authors and Acknowledgment**
+
+Project Title was created by **[Eduardo Neves](https://github.com/eduardofbneves)** and **[Frederico Cardoso](https://github.com/fredcardoso94)**.
+
+
+
+## **Conclusion**
+
+This is a simple and small app that could use many improvements if taken seriously. The data used can also be subject to improvement. Note that any user is free to use this app and develop it further.
