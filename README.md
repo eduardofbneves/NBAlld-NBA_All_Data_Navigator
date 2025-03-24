@@ -2,7 +2,7 @@
 
 Browse historical data and visualize statistics and analytics over the years in one single app. For teams and fans.
 
-## Introduction
+## **Introduction**
 
 This project was developed as an assignment in an advanced visualization course, included in my masters degree. The final goal was to present an application done in Python, mainly with recourse of Plotly library.
 
@@ -25,7 +25,7 @@ To install the NBAll'd - NBA All Data Navigator, follow these steps:
 
 ## **Authors and Acknowledgment**
 
-Project Title was created by **[Eduardo Neves](https://github.com/eduardofbneves)** and **[Frederico Cardoso](https://github.com/fredcardoso94)**.
+This project was created by **[Eduardo Neves](https://github.com/eduardofbneves)** and **[Frederico Cardoso](https://github.com/fredcardoso94)**.
 
 
 
