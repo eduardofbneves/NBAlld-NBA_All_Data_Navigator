@@ -1,21 +1,20 @@
-from dash import register_page, html, dcc, callback
-from dash.dependencies import Input, Output
+from dash import register_page, html, dcc
 import pandas as pd
 
 from utils.loader import load_dataframe
-from components.dropdown_stats import dropdown_stats
-#from components.line_graph import line_graph
+from components.list_teams_home import list_teams_home
 from components.team_profile import team_profile
 from components.team_stats_view import team_stats_view
 
 register_page(__name__, path_template='/team_view/<team_id>')
 
-
 team = load_dataframe('team')
 team_season_stats = load_dataframe('team_season_stats')
 ids = team['id'].to_list()
 
-def layout(team_id):
+def layout(team_id=None, **kwargs):
+    if team_id == None:
+        return html.Div([])
     team = load_dataframe('team')
     team_season_stats = load_dataframe('team_season_stats')
     player = load_dataframe('player')
@@ -35,6 +34,3 @@ def layout(team_id):
             team_stats_view(team, team_stats, player, player_season_stats)
         ]
     )
-
-
-

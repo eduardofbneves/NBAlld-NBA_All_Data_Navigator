@@ -8,12 +8,12 @@ def player_profile_compare(player) -> html.Div:
     return html.Div([
         dbc.Col([
             dbc.Row([
-            html.H1(player.iloc[0]['full_name'])
+            html.H1(player['full_name'])
                 ], className='header-title'
             ),
             dbc.Row([
-                html.H4('#' + check_nan_players(player.iloc[0]['jersey']) 
-                        + ' ' + check_nan_players(player.iloc[0]['position']))
+                html.H4('#' + check_nan_players(player.iloc[0,9]) 
+                        + ' ' + check_nan_players(player.iloc[0,10]))
             ], className='align-center'),
         ], className='header-compare'),
     ])

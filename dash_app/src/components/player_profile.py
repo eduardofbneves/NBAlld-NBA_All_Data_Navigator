@@ -22,7 +22,7 @@ def player_profile(player) -> html.Div:
                 
                 dbc.Col([
                     dbc.Row([
-                        html.H1(player.iloc[0]['full_name'])
+                        html.H1(player.iloc[0,1])
                         ], className='header-title'
                     ),
                     dbc.Row([

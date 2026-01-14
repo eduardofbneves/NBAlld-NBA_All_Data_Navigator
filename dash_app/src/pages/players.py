@@ -14,25 +14,27 @@ player_info = load_dataframe('player')
 team = load_dataframe('team')
 player_season_stats = load_dataframe('player_season_stats')
 season_ind = load_dataframe('season_ind')
-#player = player_info.loc[player_info['id'] == 51]
+#player = player_info[player_info['id'] == 2544] #Lebron
 
 layout = html.Div([
     dbc.Row([
         dbc.Col([
-            dropdown_list(team['full_name'].to_list(), 'player-pick-team', 'Pick by team'),
+            dropdown_list(team['full_name'].to_list(), 'player-pick-team', 'Pick by team',
+            value='Los Angeles Lakers'),
         ]),
         dbc.Col([
-            dropdown_list(player_info['position'].unique(), 'player-pick-position', 'Pick by postition'),
+            dropdown_list(player_info['position'].unique(), 'player-pick-position', 'Pick by postition',
+            value='Forward'),
         ]),
     ]),
    dbc.Row([
        dcc.Dropdown(
             id='player-drop',
             options=[{'label':player, 'value':player} for player in player_info['full_name'].to_list()],
-            value = []
+            value='LeBron James'
             ),
    ]),
-    #player_profile(player)
+    
     html.Div(id='player-header'),
     dcc.Store(id='player-store'),
     dcc.RangeSlider(season_ind.iloc[0, 0]-20000, 
@@ -53,7 +55,10 @@ layout = html.Div([
     Input('player-pick-team', 'value'),
     Input('player-pick-position', 'value'),
 )
-def update_page(team_name = team['full_name'].to_list(), position = team['full_name'].to_list()):
+def update_page(
+    team_name = team['full_name'].to_list(), 
+    position = team['full_name'].to_list()
+    ):
     # TODO players with nan vals
     players_picked = player_info.copy()
     if type(team_name) != list or len(team_name) == 0:
@@ -73,7 +78,7 @@ def update_page(team_name = team['full_name'].to_list(), position = team['full_n
 )
 def update_page(player_name):
     player = player_info[player_info['full_name'] == player_name]
-    return player_profile(player), player.iloc[0].to_list()
+    return player_profile(player), player.iloc[0,:].to_list()
 #, player_stats_view(player, player_stats, season_ind)
 
 
@@ -97,7 +102,6 @@ def player_graphs(seasons, player_list):
                                        player_list[0]]
         return player_stats_view(player_list, player_stats)
     seasons = list(range(seasons[0]+20000, seasons[1]+20001))
-    player_stats = player_season_stats[player_season_stats['player_id'] == 
-                                       player_list[0]]
+    player_stats = player_season_stats[player_season_stats['player_id'] ==  player_list[0]]
     player_stats = player_stats[player_stats['season_id'].isin(seasons)]
     return player_stats_view(player_list, player_stats)

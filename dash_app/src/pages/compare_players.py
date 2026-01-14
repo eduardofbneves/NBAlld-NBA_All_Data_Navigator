@@ -12,13 +12,14 @@ register_page(__name__, path_template='/compare_players/<player1_id>')
 player = load_dataframe('player')
 player_season_stats = load_dataframe('player_season_stats')
 
-def layout(player1_id):
+def layout(player1_id=None, **kwargs):
+    if player1_id == None:
+        return html.Div([])
     player1_id = int(player1_id)
     player = load_dataframe('player')
     player_season_stats = load_dataframe('player_season_stats')
     player1 = player[player['id'] == player1_id]
     player1_stats = player_season_stats[player_season_stats['player_id'] == player1_id]   
-    print(player1, player1_stats)
     
     return html.Div([
         dbc.Row([
@@ -58,6 +59,5 @@ def update_player2(player_name):
         return html.Div(['Choose player to compare'], className='align-center'), html.Div()
     player2 = player[player['full_name'] == player_name]
     player2_stats = player_season_stats[player_season_stats['player_id'] == player2.iloc[0]['id']] 
-    print(player2) 
     return player_profile_compare(player2), player_stats_compare(player2, player2_stats)
 

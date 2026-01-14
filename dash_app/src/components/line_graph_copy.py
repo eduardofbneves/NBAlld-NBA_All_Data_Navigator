@@ -12,7 +12,6 @@ def line_graph(data: pd.DataFrame, title: str,
         [Input(options_id, "value")],
     )
     def update_bar_chart(stats: list[str]) -> px.line():
-        print('drena')
         if len(data) == 0:
             return None
         #filtered_data = data[stats]
