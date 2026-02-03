@@ -9,23 +9,6 @@ def main() -> None:
         external_stylesheets=[dbc.themes.UNITED]
         )
     app.title = "NBAll'd"
-    '''
-    app.layout = html.Div([
-        html.H1('Multi-page app with Dash Pages'),
-
-        html.Div(
-            [
-                html.Div(
-                    dcc.Link(
-                        f"{page['name']} - {page['path']}", href=page["relative_path"]
-                    )
-                )
-                for page in page_registry.values()
-            ]
-        ),
-        page_container
-    ])
-    '''
 
     app.layout = html.Div([
         html.Div(
@@ -35,13 +18,17 @@ def main() -> None:
             ),
             id='main-title-div'
         ),
-        html.Div(
-            [
-            navbar,
+        html.Div([
+            html.Div(
+                navbar,
+                id='navbar-div'
+            ),
             page_container,
-            ]
-        ),
-    ])
+            ],
+            id='navbar-container-app'),
+    ],
+    id='navbar-title-card'
+    )
     app.run()
 
 

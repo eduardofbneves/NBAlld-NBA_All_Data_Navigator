@@ -4,8 +4,7 @@
 # package imports
 import dash_bootstrap_components as dbc
 import dash
-from dash import Input, Output, State, html, dcc, page_registry, page_container
-from dash_bootstrap_components._components.Container import Container
+from dash import Input, Output, State
 
 '''
 search_bar = dbc.Row(
@@ -38,27 +37,20 @@ navbar = dbc.Navbar(
                                 dbc.NavItem(dbc.NavLink("Teams", href='/teams')),
                                 
                             ],
-                            navbar=True
+                            navbar=True,
                             )
                         ],
                         width={"size":"auto"})
                     ],
                     align="center"),
-                    dbc.Col(dbc.NavbarToggler(id="navbar-toggler", n_clicks=0)),
+                    dbc.Col(dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
+                    id='navbar-row'),
+                    
                 ],
-            fluid=True
+            fluid=True,
+            
             ),
     color="primary",
-    dark=True
+    dark=True,
+    id='navbar-container'
 )
-
-
-@dash.callback(
-    Output("navbar-collapse", "is_open"),
-    [Input("navbar-toggler", "n_clicks")],
-    [State("navbar-collapse", "is_open")],
-)
-def toggle_navbar_collapse(n, is_open):
-    if n:
-        return not is_open
-    return is_open

@@ -34,14 +34,14 @@ def season_stats(
     
     bar_fig.append_trace(go.Scatter(
         y=team_list['full_name'], 
-        x=sorted_teams['fg_pct'].tolist()[:5]*100,
+        x=sorted_teams['fg_pct'].tolist()[:5],
         mode='lines+markers',
         line_color='rgb(128, 0, 128)',
-        name='Percentage of converted bucjets per season',
+        name='Buckets made per season',
     ), 1, 2)
     
     bar_fig.update_layout(
-    title='Average type of bucket made per season and accuracy',
+    title='Buckets made per season and accuracy',
     yaxis=dict(
         showgrid=False,
         showline=False,
@@ -113,6 +113,24 @@ def season_stats(
                         ], className='text-center')
                     ]),
         ], className='p-2 align-items-stretch'),
+            '''dbc.Row([
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardBody([
+                            html.P('Field goals per seasons selected'),
+                            dcc.Graph()
+                        ], className='text-center')
+                    ]),
+                ], xs=4),
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardBody([
+                            dcc.Graph(figure=sub_fig)
+                        ])
+                    ], className='h-100 text-center')
+                ], xs=8),
+            ], className='p-2 align-items-stretch'),
+            # content'''
         
         ])
         

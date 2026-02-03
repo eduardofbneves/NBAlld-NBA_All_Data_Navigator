@@ -10,5 +10,6 @@ layout = html.Div(
         html.Div(),
         html.P('Statistics for teams and spectators'),
         html.H1('Navigate in the bar above')
-    ], className='home-text'
+    ], 
+    className='home-text'
 )

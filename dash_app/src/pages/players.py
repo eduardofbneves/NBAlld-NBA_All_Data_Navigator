@@ -5,7 +5,6 @@ from dash.dependencies import Input, Output
 from utils.loader import load_dataframe
 from components.player_profile import player_profile
 from components.dropdown_list import dropdown_list
-from components.dropdown_vals import dropdown_vals
 from components.player_stats_view import player_stats_view
 
 register_page(__name__, path='/players')
@@ -14,26 +13,29 @@ player_info = load_dataframe('player')
 team = load_dataframe('team')
 player_season_stats = load_dataframe('player_season_stats')
 season_ind = load_dataframe('season_ind')
-#player = player_info[player_info['id'] == 2544] #Lebron
 
 layout = html.Div([
-    dbc.Row([
-        dbc.Col([
-            dropdown_list(team['full_name'].to_list(), 'player-pick-team', 'Pick by team',
-            value='Los Angeles Lakers'),
+    dbc.Card([
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col([
+                    dropdown_list(team['full_name'].to_list(), 'player-pick-team', 'Pick by team',
+                    value='Los Angeles Lakers'),
+                ]),
+                dbc.Col([
+                    dropdown_list(player_info['position'].unique(), 'player-pick-position', 'Pick by postition',
+                    value='Forward'),
+                ]),
+            ]),
+        dbc.Row([
+            dcc.Dropdown(
+                    id='player-drop',
+                    options=[{'label':player, 'value':player} for player in player_info['full_name'].to_list()],
+                    value='LeBron James'
+                    ),
         ]),
-        dbc.Col([
-            dropdown_list(player_info['position'].unique(), 'player-pick-position', 'Pick by postition',
-            value='Forward'),
-        ]),
-    ]),
-   dbc.Row([
-       dcc.Dropdown(
-            id='player-drop',
-            options=[{'label':player, 'value':player} for player in player_info['full_name'].to_list()],
-            value='LeBron James'
-            ),
-   ]),
+    ])
+]),
     
     html.Div(id='player-header'),
     dcc.Store(id='player-store'),

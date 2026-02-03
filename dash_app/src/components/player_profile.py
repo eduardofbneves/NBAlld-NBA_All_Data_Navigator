@@ -17,19 +17,21 @@ def player_profile(player) -> html.Div:
                 ], class_name='header-description'),
             dbc.Row([
                 dbc.Col([
-                    html.H4('Photo'),
+                    html.H4(' '),
                        ], xs=2),
                 
                 dbc.Col([
                     dbc.Row([
-                        html.H1(player.iloc[0,1])
-                        ], className='header-title'
-                    ),
-                    dbc.Row([
-                        html.H4('#' + check_nan_players(player.iloc[0]['jersey']) 
-                                + ' ' + check_nan_players(player.iloc[0]['position']))
-                    ], className='align-center'),
-                ], xs=3),
+                        html.H1(player.iloc[0,1], className='header-title'),
+                        html.H4('#' + check_nan_players(
+                            player.iloc[0]['jersey']
+                            ) + ' ' + check_nan_players(
+                                player.iloc[0]['position']
+                            )
+                        )
+                    ], 
+                    className='player-header-text'
+                )], xs=3),
                 dbc.Col([
                     dbc.Row([
                             #html.Div(children=[html.P('Country:'), html.H5(player.iloc[0]['country'])]),
@@ -54,20 +56,8 @@ def player_profile(player) -> html.Div:
                 ], xs=4)
             ], className='p-2 align-items-stretch'),
             ],
-            className="header",
+            className="player-header",
         ),
 
     ]
 )
-
-
-
-'''
-html.P(
-                    children=(
-                        "Analyze the behavior of avocado prices and the number"
-                        " of avocados sold in the US between 2015 and 2018"
-                    ),
-                    className="header-description",
-                ),
-'''

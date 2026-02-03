@@ -1,22 +1,52 @@
 /* assets/style.css */
+:root {
+  --bg: #e6e6e6;
+  --bg-elev: #131720;
+  --panel: #12141a;
+  --text: #0b0c10;
+  --text-player-card: #e6e6e6;
+  --muted: #a0a6b2;
+  --brand: #4f8cff;
+  --brand2: #0149cf;
+  --border: #1f2430;
+  --chip: #1a1f2b;
+  --basket: #e95420;
+  --radius: 12px;
+}
+
 
 body {
     font-family: "Lato", sans-serif;
-    color: #222222;
     margin: 0;
-    background-color: #F7F7F7;
+    background-color: var(--bg);
 }
 
-.home-text{
+.player-header {
+    color: var(--text-player-card);
+    margin: auto;
+}
+
+
+body .home-text{
     font-size: 80px;
     margin: 0 auto;
     text-align: center;
     vertical-align: middle;
     justify-content: center;
+    color: var(--bg);
+}
+/*
+div {
+    border-radius: var(--radius);
+}
+*/
+
+h2 .center {
+    align-items: center;
 }
 
 .header {
-    background-color: #222222;
+    background-color: var(--bg-elev);
     height: 270px;
     display: flex;
     flex-direction: column;
@@ -24,7 +54,7 @@ body {
 }
 
 .header-compare{
-    background-color: #222222;
+    background-color: var(bg);
     height: 180px;
     display: flex;
     flex-direction: column;
@@ -32,7 +62,7 @@ body {
 }
 
 .header-teams{
-    background-color: #222222;
+    background-color: var(--bg);
     height: 230px;
     display: flex;
     flex-direction: column;
@@ -76,11 +106,12 @@ body {
     text-align: center;
     vertical-align: middle;
 }
+/*
 .align-center{
     color: #CFCFCF;
     text-align: center;
 }
-
+*/
 .list-players-seasons{
     text-align: center;
 }
@@ -101,6 +132,27 @@ body {
 
 #main-title-div {
     font-weight: bold;
-    background-color:#222222;
+    font-size: 40px;
     color: white;
+    padding: 1rem;
+    background-color: var(--bg-elev);
+}
+
+#navbar-title-card {
+    background-color: var(--bg-elev);
+    margin: 0;
+    padding: 16px;
+}
+
+.compare-player-button-div {
+    align-items: center;
+    border-radius: var(--radius);
+    background-color: var(--basket);
+    color: var(--basket);
+}
+
+button{
+    border-radius: var(--radius);
+    background-color: var(--basket);
+    color: var(--text-player-card);
 }

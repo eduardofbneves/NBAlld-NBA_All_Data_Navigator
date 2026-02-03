@@ -14,32 +14,49 @@ team_season_stats = load_dataframe('team_season_stats')
 player = load_dataframe('player')
 player_season_stats = load_dataframe('player_season_stats')
 season_ind = load_dataframe('season_ind')
-#player = player_info.loc[player_info['id'] == 51]
 
 layout = html.Div([
     html.Div([
-        # show team_season_stats
-        html.P('Pick seasons:'),
-        dcc.RangeSlider(season_ind.iloc[0, 0]-20000, 
-                        season_ind.iloc[-2, 0]-20000, 1,
-                        value=[season_ind.iloc[0, 0]-20000, 
-                               season_ind.iloc[-2, 0]-20000],
-                        marks=dict(zip(list(range(season_ind.iloc[0, 0]-20000,
-                                                  season_ind.iloc[-1, 0]-20000)), 
-                                       season_ind['season_str'].tolist())), 
-                        allowCross=False, id='season-picker-season'),
+         dbc.Card([
+            dbc.CardBody([
+                html.H4('Pick season range:'),
+                dcc.RangeSlider(
+                    season_ind.iloc[0, 0]-20000, 
+                    season_ind.iloc[-2, 0]-20000, 
+                    1, 
+                    value=[
+                        season_ind.iloc[0, 0]-20000, 
+                        season_ind.iloc[-2, 0]-20000
+                    ],
+                    marks=dict(zip(list(
+                        range(
+                            season_ind.iloc[0, 0]-20000,
+                            season_ind.iloc[-1, 0]-20000)
+                        ), 
+                        season_ind['season_str'].tolist()
+                    )), 
+                    allowCross=False, 
+                    id='season-picker-season'
+                ),
+            ])
+        ]),
         html.Div(id='season-profile'),
         dbc.Card([
             dbc.CardBody([
-                dcc.Checklist(['home', 'away'], 
+                html.H2("Best Stats Players home and away", id='center'),
+                dcc.Checklist(
+                    ['home', 'away'], 
                     value=['home', 'away'], 
                     id='check',
-                    labelStyle={"display": "flex", "align-items": "center"},
-                    inline=True),
+                    labelStyle={
+                        "display": "flex", 
+                        "align-items": "center"
+                    },
+                    inline=True
+                ),
                 html.Div(id='check-board', className='list-players-seasons')
             ])
-        ]),
-        
+        ]),        
     ]),
 ])
 
