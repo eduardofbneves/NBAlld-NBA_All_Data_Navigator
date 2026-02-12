@@ -26,10 +26,8 @@ def player_stats_view(player, player_stats) -> html.Div:
             ),
             range=[0, 90],
             autorange=False,
-            fixedrange=False
-            
+            fixedrange=False  
         ),
-
     )
     
     stats = player_stats[['pts_home','ast_home', 'miss', 'blk_home', 'reb_home']].mean(axis=0).tolist()
@@ -37,17 +35,6 @@ def player_stats_view(player, player_stats) -> html.Div:
     for i in range(len(stats)):
         stats_index.append(stats[i]/PLAYER_STATS_INDEXES[i])
     
-    '''radial_layout = go.Layout(
-        title='Hobbs-Pearson Trials',
-        font=dict(
-            size=15
-        ),
-        plot_bgcolor='rgb(223, 223, 223)',
-        angularaxis=dict(
-            tickcolor='rgb(253,253,253)',
-            range=[0,6],
-        )
-    )'''
     radial_fig = go.Figure()
     radial_fig.add_trace(go.Scatterpolar(
         r = stats_index,
@@ -75,10 +62,9 @@ def player_stats_view(player, player_stats) -> html.Div:
 
 
     sun_data = dict(
-        character=["buckets", "fg2", "fg3", "ft", "fg2_home", "fg2_away", "fg3_home", "fg3_away", "ft_home", "ft_away"],
-        parent=["", "buckets", "buckets", "buckets", "fg2", "fg2", "fg3", "fg3", "ft", "ft" ],
+        character=["Buckets", "fg2", "fg3", "ft", "fg2 - home", "fg2 - away", "fg3 - home", "fg3 - away", "ft - home", "ft - away"],
+        parent=["", "Buckets", "Buckets", "Buckets", "fg2", "fg2", "fg3", "fg3", "ft", "ft" ],
         value=[0,0,0,0] + player_stats[["fg2_pts_home", "fg2_pts_away", "fg3_pts_home", "fg3_pts_away", "ft_home", "ft_away"]].sum(axis=0).tolist()
-        #value=[0, 0, 0, 0, 2, 6, 6, 4, 4,4])
     )
     sun_fig = px.sunburst(
         sun_data,

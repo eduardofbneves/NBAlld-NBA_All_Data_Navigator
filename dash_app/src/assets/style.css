@@ -26,9 +26,20 @@ body {
     margin: auto;
 }
 
+.home-text h1{
+    font-size: 80px;
+}
+
+.home-text h2{
+    font-size: 60px;
+    color: var(--basket);
+}
+
+.home-text p{
+    padding-top: 2px;
+}
 
 body .home-text{
-    font-size: 80px;
     margin: 0 auto;
     text-align: center;
     vertical-align: middle;
@@ -60,6 +71,28 @@ h2 .center {
     flex-direction: column;
     justify-content: center;
 }
+
+.team-header {
+    color: var(--text-player-card);
+    margin-top: 1em;
+}
+
+.team-header h1{
+    margin-bottom: 1em;
+}
+
+.team-header h2{
+    margin-bottom: 1em;
+}
+
+.team-header-text {
+    color: #CFCFCF;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+
 
 .header-teams{
     background-color: var(--bg);
@@ -97,7 +130,6 @@ h2 .center {
 }
 
 .home-text {
-    color: #222222;
     text-align: center;
     vertical-align: middle;
 }
@@ -105,6 +137,26 @@ h2 .center {
 .teams-text{
     text-align: center;
     vertical-align: middle;
+    color: var(--text-player-card);
+    margin: 2em;
+}
+
+.teams-text h2{
+    text-decoration: underline;
+    margin-top: 1em;
+}
+.team-header h2{
+    color: var(--text-player-card);
+}
+
+.teams-text a{
+    color: var(--basket);
+    text-decoration: none;
+}
+
+.teams-text a:hover{
+    color: var(--text-player-card);
+    text-decoration: underline;
 }
 /*
 .align-center{
@@ -145,11 +197,17 @@ h2 .center {
 }
 
 .compare-player-button-div {
+    display: flex;
+    justify-content: center;
     align-items: center;
     border-radius: var(--radius);
-    background-color: var(--basket);
     color: var(--basket);
 }
+
+.url-support-page-div div{
+    max-height: 450px;
+}
+
 
 button{
     border-radius: var(--radius);

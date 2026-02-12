@@ -12,22 +12,21 @@ register_page(__name__, path_template='/compare_players/<player1_id>')
 player = load_dataframe('player')
 player_season_stats = load_dataframe('player_season_stats')
 
+# TODO so as paginas com /id e que fazem esta cena de crescer
 def layout(player1_id=None, **kwargs):
     if player1_id == None:
         return html.Div([])
     player1_id = int(player1_id)
-    player = load_dataframe('player')
-    player_season_stats = load_dataframe('player_season_stats')
     player1 = player[player['id'] == player1_id]
     player1_stats = player_season_stats[player_season_stats['player_id'] == player1_id]   
     
     return html.Div([
         dbc.Row([
             dcc.Dropdown(
-                    id='player2-drop',
-                    options=[{'label':player, 'value':player} for player in player['full_name'].to_list()],
-                    value = []
-                    ),
+                id='player2-drop',
+                options=[{'label':player, 'value':player} for player in player['full_name'].to_list()],
+                value = []
+            ),
         ]),
         dbc.Row([
             dbc.Col([
@@ -40,13 +39,13 @@ def layout(player1_id=None, **kwargs):
         ]),
         dbc.Row([
             dbc.Col([
-                player_stats_compare(player1, player1_stats),
+                player_stats_compare(player1_stats),
             ],xs=6),
             dbc.Col([
                 html.Div(id='player2-stats')
             ],xs=6)            
         ])
-    ])
+    ], className='url-support-page-div')
 
 
 @callback(
@@ -56,8 +55,14 @@ def layout(player1_id=None, **kwargs):
 )
 def update_player2(player_name):
     if len(player_name) == 0 or player_name == None:
-        return html.Div(['Choose player to compare'], className='align-center'), html.Div()
+        return html.Div([
+            dbc.Col([
+                dbc.Row([
+                    html.H1('Choose Player to Compare'),
+                ], className='header-title'),
+            ], className='header-compare'),
+        ]), html.Div()
     player2 = player[player['full_name'] == player_name]
     player2_stats = player_season_stats[player_season_stats['player_id'] == player2.iloc[0]['id']] 
-    return player_profile_compare(player2), player_stats_compare(player2, player2_stats)
+    return player_profile_compare(player2), player_stats_compare(player2_stats)
 

@@ -1,6 +1,5 @@
-from dash import html, dcc
+from dash import html
 import dash_bootstrap_components as dbc
-import pandas as pd
 
 from utils.check_nan_players import check_nan_players
 
@@ -8,24 +7,9 @@ def player_profile_compare(player) -> html.Div:
     return html.Div([
         dbc.Col([
             dbc.Row([
-            html.H1(player['full_name'])
-                ], className='header-title'
-            ),
-            dbc.Row([
+                html.H1(player['full_name']),
                 html.H4('#' + check_nan_players(player.iloc[0,9]) 
-                        + ' ' + check_nan_players(player.iloc[0,10]))
-            ], className='align-center'),
+                            + ' ' + check_nan_players(player.iloc[0,10]))
+            ], className='header-title'),
         ], className='header-compare'),
     ])
-
-
-
-'''
-html.P(
-                    children=(
-                        "Analyze the behavior of avocado prices and the number"
-                        " of avocados sold in the US between 2015 and 2018"
-                    ),
-                    className="header-description",
-                ),
-'''

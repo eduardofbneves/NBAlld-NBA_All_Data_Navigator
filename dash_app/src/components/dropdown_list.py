@@ -1,17 +1,29 @@
-from dash import Dash, dcc, html
-from dash.dependencies import Input, Output
-import pandas as pd
-
-from utils.loader import load_dataframe
+from dash import dcc, html
 
 
-def dropdown_list(list: list[str], chart_id: str, title: str, value: str) -> html.Div:
+def dropdown_list(
+    list: list[str], 
+    chart_id: str, 
+    title: str, 
+    value: str = None,
+) -> html.Div:
+    if value == None:
+        return html.Div(
+        children=[
+            html.H6(title),
+            dcc.Dropdown(
+                id=chart_id,
+                options = [{"label": data, "value": data} for data in list],
+                multi=True,
+            ),
+        ]
+    )
     return html.Div(
         children=[
             html.H6(title),
             dcc.Dropdown(
                 id=chart_id,
-                options = [{"label": data, "value": data}for data in list],
+                options = [{"label": data, "value": data} for data in list],
                 multi=True,
                 value=value
             ),

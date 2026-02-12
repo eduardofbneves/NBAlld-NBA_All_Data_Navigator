@@ -20,49 +20,55 @@ layout = html.Div([
             dbc.Row([
                 dbc.Col([
                     dropdown_list(team['full_name'].to_list(), 'player-pick-team', 'Pick by team',
-                    value='Los Angeles Lakers'),
+                    #value='Los Angeles Lakers'
+                    ),
                 ]),
                 dbc.Col([
                     dropdown_list(player_info['position'].unique(), 'player-pick-position', 'Pick by postition',
-                    value='Forward'),
+                    #value='Forward'
+                    ),
                 ]),
             ]),
-        dbc.Row([
-            dcc.Dropdown(
-                    id='player-drop',
-                    options=[{'label':player, 'value':player} for player in player_info['full_name'].to_list()],
-                    value='LeBron James'
-                    ),
-        ]),
-    ])
-]),
-    
+            dbc.Row([
+                dcc.Dropdown(
+                        id='player-drop',
+                        options=[{'label':player, 'value':player} for player in player_info['full_name'].to_list()],
+                        value='LeBron James'
+                        ),
+            ]),
+        ])
+    ]),
+        
     html.Div(id='player-header'),
     dcc.Store(id='player-store'),
     dcc.RangeSlider(season_ind.iloc[0, 0]-20000, 
                         season_ind.iloc[-2, 0]-20000, 1,
                         value=[season_ind.iloc[0, 0]-20000, 
-                               season_ind.iloc[-2, 0]-20000],
+                            season_ind.iloc[-2, 0]-20000],
                         marks=dict(zip(list(range(season_ind.iloc[0, 0]-20000,
-                                                  season_ind.iloc[-1, 0]-20000)), 
-                                       season_ind['season_str'].tolist())), 
-                        allowCross=False, id='season-picker'),
+                                                season_ind.iloc[-1, 0]-20000)), 
+                                    season_ind['season_str'].tolist())), 
+                        allowCross=False, 
+                        id='season-picker'),
     html.Div(id='player-graphs')
-    
+        
 ])
 
 @callback(
     Output('player-drop', 'options'),
-    
     Input('player-pick-team', 'value'),
     Input('player-pick-position', 'value'),
 )
 def update_page(
     team_name = team['full_name'].to_list(), 
     position = team['full_name'].to_list()
-    ):
+):
     # TODO players with nan vals
     players_picked = player_info.copy()
+    if team_name == None and position == None:
+        return [{'label': i, 'value': i} for i in players_picked['full_name'].to_list()]
+    if team_name == [] and position == []:
+        return [{'label': i, 'value': i} for i in players_picked['full_name'].to_list()]
     if type(team_name) != list or len(team_name) == 0:
         team_name = team['full_name'].to_list()
     if type(position) != list or len(position) == 0:
@@ -79,6 +85,8 @@ def update_page(
     Input('player-drop', 'value')
 )
 def update_page(player_name):
+    if player_name == None:
+        return html.Div(html.H1('Choose a player'))
     player = player_info[player_info['full_name'] == player_name]
     return player_profile(player), player.iloc[0,:].to_list()
 #, player_stats_view(player, player_stats, season_ind)
@@ -90,7 +98,9 @@ def update_page(player_name):
     Input('player-store', 'data')
 )
 def update_seasons(player_picked):
-    return player_picked[15], player_picked[16]
+    player_seasons = player_season_stats[
+        player_season_stats['player_id'] == player_picked[0]]
+    return player_seasons['season_id'].min()-20000, player_seasons['season_id'].max()-20000
 
 
 @callback(

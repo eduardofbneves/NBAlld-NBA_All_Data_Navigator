@@ -12,7 +12,7 @@ team = load_dataframe('team')
 layout = html.Div(
     children=[
         html.Div(children=[
-            dbc.Row(dbc.Col(html.H3('East Conference'))),
+            dbc.Row(dbc.Col(html.H2('East Conference'))),
             dbc.Row(
                 [
                     dbc.Col(list_teams_home(team, 'Atlantic')),
@@ -20,7 +20,7 @@ layout = html.Div(
                     dbc.Col(list_teams_home(team, 'Southeast')),
                 ]
             ),
-            dbc.Row(dbc.Col(html.H3('West Conference'))),
+            dbc.Row(dbc.Col(html.H2('West Conference'))),
             dbc.Row(
                 [
                     dbc.Col(list_teams_home(team, 'Northwest')),
@@ -28,9 +28,5 @@ layout = html.Div(
                     dbc.Col(list_teams_home(team, 'Southwest')),
                 ]
             ),
-            
     ], className='teams-text')
-        
-    
-    
 ])
